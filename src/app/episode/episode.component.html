@@ -2,7 +2,7 @@
 <div *ngIf="!episode" class="message">Loading episodes...</div>
 <div *ngIf="show && episode">
   <p>
-    <a>&lt;&lt; Back to show: {{show.name}}</a>
+    <a routerLink="/shows/{{show.id}}">&lt;&lt; Back to show: {{show.name}}</a>
   </p>
   <div class="details">
     <img

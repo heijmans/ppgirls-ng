@@ -1,5 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
 import { ShowListComponent } from "./show-list/show-list.component";
@@ -20,9 +22,7 @@ import { routes } from "./routes";
     EpisodeListComponent,
     EpisodeComponent,
   ],
-  imports: [
-    BrowserModule,
-  ],
+  imports: [BrowserModule, RouterModule.forRoot(routes), HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

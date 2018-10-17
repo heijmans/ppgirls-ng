@@ -4,7 +4,7 @@
     <h2>Season {{season.id}}</h2>
     <table class="episodes-table">
       <tbody>
-        <tr *ngFor="let episode of season.episodes; trackBy trackByEpisodeId" class="episode-row">
+        <tr *ngFor="let episode of season.episodes; trackBy trackByEpisodeId" routerLink="/shows/{{showId}}/episodes/{{episode.id}}" class="episode-row">
           <td>
             <img src="{{episode.image.medium}}" alt="{{season.name}}" />
           </td>

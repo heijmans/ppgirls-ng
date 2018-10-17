@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { IEpisode, IShow } from "../state/state";
 
 const NO_IMAGE_URL = "https://static.tvmaze.com/images/no-img/no-img-landscape-text.png";
@@ -10,10 +11,7 @@ const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
   styleUrls: ["./episode.component.scss"],
 })
 export class EpisodeComponent implements OnInit {
-  @Input()
   showId: number;
-
-  @Input()
   episodeId: number;
 
   show: IShow = {
@@ -33,7 +31,12 @@ export class EpisodeComponent implements OnInit {
     summary: "<b>Powerpuff</b> Girls",
   };
 
-  constructor() {}
+  constructor(private route: ActivatedRoute) {
+    route.paramMap.subscribe((map) => {
+      this.showId = parseInt(map.get("showId"), 10);
+      this.episodeId = parseInt(map.get("episodeId"), 10);
+    });
+  }
 
   ngOnInit() {}
 }
