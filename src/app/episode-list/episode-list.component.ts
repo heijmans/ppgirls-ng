@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IEpisode } from '../state/state';
+import { Component, Input, OnInit } from "@angular/core";
+import { IEpisode } from "../state/state";
 
-const NO_IMAGE_URL = 'https://static.tvmaze.com/images/no-img/no-img-landscape-text.png';
+const NO_IMAGE_URL = "https://static.tvmaze.com/images/no-img/no-img-landscape-text.png";
 const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
 
 interface ISeason {
@@ -26,32 +26,32 @@ export function groupBySeason(episodes: IEpisode[]): ISeason[] {
 }
 
 @Component({
-  selector: 'app-episode-list',
-  templateUrl: './episode-list.component.html',
-  styleUrls: ['./episode-list.component.scss']
+  selector: "app-episode-list",
+  templateUrl: "./episode-list.component.html",
+  styleUrls: ["./episode-list.component.scss"],
 })
 export class EpisodeListComponent implements OnInit {
-
-  @Input() showId: number;
+  @Input()
+  showId: number;
 
   episodes: IEpisode[] = [
     {
       id: 5,
-      name: 'PP1',
+      name: "PP1",
       image: MISSING_IMAGE,
       season: 1,
       number: 2,
     },
     {
       id: 7,
-      name: 'PP2',
+      name: "PP2",
       image: MISSING_IMAGE,
       season: 1,
       number: 3,
     },
     {
       id: 8,
-      name: 'PP2',
+      name: "PP2",
       image: MISSING_IMAGE,
       season: 2,
       number: 1,
@@ -60,7 +60,7 @@ export class EpisodeListComponent implements OnInit {
 
   seasons: ISeason[] | undefined;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.seasons = groupBySeason(this.episodes);
@@ -73,5 +73,4 @@ export class EpisodeListComponent implements OnInit {
   trackByEpisodeId(index: number, episode: IEpisode): number {
     return episode.id;
   }
-
 }
