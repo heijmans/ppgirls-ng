@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { IEpisode, IState } from "../state/state";
 import { requestEpisodes } from "../state/actions";

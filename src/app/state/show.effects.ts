@@ -31,16 +31,16 @@ export class ShowEffects {
   ) {}
 
   @Effect()
-  receiveShows$ = this.actions$
-    .ofType<IRequestShowsAction>(REQUEST_SHOWS)
-    .pipe(withLatestFrom(this.store))
-    .pipe(filter(([_, state]) => !getShows(state)))
-    .pipe(switchMap(() => fetchShows(this.showService)));
+  receiveShows$ = this.actions$.ofType<IRequestShowsAction>(REQUEST_SHOWS).pipe(
+    withLatestFrom(this.store),
+    filter(([_, state]) => !getShows(state)),
+    switchMap(() => fetchShows(this.showService)),
+  );
 
   @Effect()
-  receiveEpisodes$ = this.actions$
-    .ofType<IRequestEpisodesAction>(REQUEST_EPISODES)
-    .pipe(withLatestFrom(this.store))
-    .pipe(filter(([{ showId }, state]) => !getEpisodes(showId)(state)))
-    .pipe(switchMap(([{ showId }, _]) => fetchEpisodes(this.showService, showId)));
+  receiveEpisodes$ = this.actions$.ofType<IRequestEpisodesAction>(REQUEST_EPISODES).pipe(
+    withLatestFrom(this.store),
+    filter(([{ showId }, state]) => !getEpisodes(showId)(state)),
+    switchMap(([{ showId }, _]) => fetchEpisodes(this.showService, showId)),
+  );
 }
