@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { IEpisode } from "../state/state";
-
-const NO_IMAGE_URL = "https://static.tvmaze.com/images/no-img/no-img-landscape-text.png";
-const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
+import { ActivatedRoute } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { IEpisode, IState } from "../state/state";
+import { requestEpisodes } from "../state/actions";
+import { getEpisodes } from "../state/selectors";
 
 interface ISeason {
   id: string;
@@ -32,38 +33,21 @@ export function groupBySeason(episodes: IEpisode[]): ISeason[] {
 })
 export class EpisodeListComponent implements OnInit {
   @Input()
-  showId: number;
-
-  episodes: IEpisode[] = [
-    {
-      id: 5,
-      name: "PP1",
-      image: MISSING_IMAGE,
-      season: 1,
-      number: 2,
-    },
-    {
-      id: 7,
-      name: "PP2",
-      image: MISSING_IMAGE,
-      season: 1,
-      number: 3,
-    },
-    {
-      id: 8,
-      name: "PP2",
-      image: MISSING_IMAGE,
-      season: 2,
-      number: 1,
-    },
-  ];
+  showId: number | undefined;
 
   seasons: ISeason[] | undefined;
 
-  constructor() {}
+  constructor(private store: Store<IState>) {}
 
   ngOnInit() {
-    this.seasons = groupBySeason(this.episodes);
+    // TODO: handle showId changes
+    this.store.dispatch(requestEpisodes(this.showId!));
+
+    this.store.select(getEpisodes(this.showId!)).subscribe((episodes) => {
+      if (episodes) {
+        this.seasons = groupBySeason(episodes);
+      }
+    });
   }
 
   trackBySeasonId(index: number, season: ISeason): string {

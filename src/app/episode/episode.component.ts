@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { IEpisode, IShow } from "../state/state";
+import { Store } from "@ngrx/store";
+import { switchMap, tap } from "rxjs/operators";
+import { IEpisode, IShow, IState } from "../state/state";
+import { requestShows, requestEpisodes } from "../state/actions";
+import { getShow, getEpisode } from "../state/selectors";
 
 const NO_IMAGE_URL = "https://static.tvmaze.com/images/no-img/no-img-landscape-text.png";
 const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
@@ -11,32 +15,31 @@ const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
   styleUrls: ["./episode.component.scss"],
 })
 export class EpisodeComponent implements OnInit {
-  showId: number;
-  episodeId: number;
+  showId: number | undefined;
+  episodeId: number | undefined;
 
-  show: IShow = {
-    id: 5,
-    name: "PP1",
-    premiered: "2015-01-05",
-    image: MISSING_IMAGE,
-    summary: "<b>Powerpuff</b> Girls",
-  };
+  show: IShow | undefined;
+  episode: IEpisode | undefined;
 
-  episode: IEpisode = {
-    id: 5,
-    name: "PP1",
-    image: MISSING_IMAGE,
-    season: 1,
-    number: 2,
-    summary: "<b>Powerpuff</b> Girls",
-  };
+  constructor(private route: ActivatedRoute, private store: Store<IState>) {}
 
-  constructor(private route: ActivatedRoute) {
-    route.paramMap.subscribe((map) => {
-      this.showId = parseInt(map.get("showId"), 10);
-      this.episodeId = parseInt(map.get("episodeId"), 10);
+  ngOnInit() {
+    this.store.dispatch(requestShows());
+
+    const param$ = this.route.paramMap.pipe(
+      tap((params) => {
+        this.showId = parseInt(params.get("showId") || "0", 10);
+        this.episodeId = parseInt(params.get("episodeId") || "0", 10);
+        this.store.dispatch(requestEpisodes(this.showId));
+      }),
+    );
+    param$.pipe(switchMap(() => this.store.select(getShow(this.showId!)))).subscribe((show) => {
+      this.show = show;
     });
+    param$
+      .pipe(switchMap(() => this.store.select(getEpisode(this.showId!, this.episodeId!))))
+      .subscribe((episode) => {
+        this.episode = episode;
+      });
   }
-
-  ngOnInit() {}
 }

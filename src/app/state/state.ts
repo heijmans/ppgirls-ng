@@ -19,3 +19,19 @@ export interface IEpisode {
   season: number;
   number: number;
 }
+
+export interface ILoadEntry<Data> {
+  isFetching?: boolean;
+  data?: Data;
+}
+
+export interface IEpisodesByShow {
+  [showId: number]: ILoadEntry<IEpisode[]> | undefined;
+}
+
+export interface IState {
+  shows: ILoadEntry<IShow[]>;
+  episodesByShowId: IEpisodesByShow;
+}
+
+export const INITIAL_STATE: IState = { shows: {}, episodesByShowId: {} };

@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { IShow } from "../state/state";
-
-const NO_IMAGE_URL = "https://static.tvmaze.com/images/no-img/no-img-landscape-text.png";
-const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
+import { Store } from "@ngrx/store";
+import { IShow, IState } from "../state/state";
+import { getShows } from "../state/selectors";
+import { requestShows } from "../state/actions";
 
 @Component({
   selector: "app-show-list",
@@ -10,26 +10,19 @@ const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
   styleUrls: ["./show-list.component.scss"],
 })
 export class ShowListComponent implements OnInit {
-  shows: IShow[] = [
-    {
-      id: 5,
-      name: "PP1",
-      premiered: "2015-01-05",
-      image: MISSING_IMAGE,
-    },
-    {
-      id: 7,
-      name: "PP2",
-      premiered: "2017-11-05",
-      image: MISSING_IMAGE,
-    },
-  ];
+  shows: IShow[] | undefined;
 
-  constructor() {}
+  constructor(private store: Store<IState>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(requestShows());
 
-  trackByShowId(index: number, show: IShow): number {
+    this.store.select(getShows).subscribe((shows) => {
+      this.shows = shows;
+    });
+  }
+
+  trackByShowId(_: number, show: IShow): number {
     return show.id;
   }
 }

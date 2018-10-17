@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { IShow } from "../state/state";
-
-const NO_IMAGE_URL = "https://static.tvmaze.com/images/no-img/no-img-landscape-text.png";
-const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
+import { Store } from "@ngrx/store";
+import { tap, switchMap } from "rxjs/operators";
+import { IShow, IState } from "../state/state";
+import { requestShows } from "../state/actions";
+import { getShow } from "../state/selectors";
 
 @Component({
   selector: "app-show",
@@ -11,21 +12,24 @@ const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
   styleUrls: ["./show.component.scss"],
 })
 export class ShowComponent implements OnInit {
-  showId: number;
+  showId: number | undefined;
 
-  show: IShow = {
-    id: 5,
-    name: "PP1",
-    premiered: "2015-01-05",
-    image: MISSING_IMAGE,
-    summary: "<b>Powerpuff</b> Girls",
-  };
+  show: IShow | undefined;
 
-  constructor(private route: ActivatedRoute) {
-    route.paramMap.subscribe((map) => {
-      this.showId = parseInt(map.get("showId"), 10);
-    });
+  constructor(private route: ActivatedRoute, private store: Store<IState>) {}
+
+  ngOnInit() {
+    this.store.dispatch(requestShows());
+
+    this.route.paramMap
+      .pipe(
+        tap((params) => {
+          this.showId = parseInt(params.get("showId") || "0", 10);
+        }),
+      )
+      .pipe(switchMap(() => this.store.select(getShow(this.showId!))))
+      .subscribe((show) => {
+        this.show = show;
+      });
   }
-
-  ngOnInit() {}
 }
