@@ -1,0 +1,23 @@
+<div *ngIf="!show" class="message">Loading shows...</div>
+<div *ngIf="!episode" class="message">Loading episodes...</div>
+<div *ngIf="show && episode">
+  <p>
+    <a>&lt;&lt; Back to show: {{show.name}}</a>
+  </p>
+  <div class="details">
+    <img
+      src="{{episode.image.original}}"
+      alt="{{episode.name}}"
+      class="details-image details-image-episode"
+    />
+    <div class="details-card">
+      <div class="details-title">
+        {{episode.name}}
+      </div>
+      <div
+        class="details-summary"
+        [innerHTML]="episode.summary | safeHtml"
+      ></div>
+    </div>
+  </div>
+</div>

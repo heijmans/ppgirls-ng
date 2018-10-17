@@ -1,0 +1,34 @@
+@import "../../setup.scss";
+
+.episodes-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .episodes-table {
+    width: 50%;
+  }
+}
+
+.episode-row {
+  @extend %hover;
+  &:nth-child(odd) {
+    background-color: $bubbles-light;
+    &:hover {
+      background-color: $blossom-light;
+    }
+  }
+  td {
+    padding: 0.5rem;
+  }
+  img {
+    display: block;
+    height: 3rem;
+  }
+}
+
+.season h2 {
+  margin: 0;
+  padding: 1rem;
+}

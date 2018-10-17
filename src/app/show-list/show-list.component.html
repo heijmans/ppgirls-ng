@@ -1,4 +1,5 @@
-<div class="shows">
+<div *ngIf="!shows" class="message">Loading shows...</div>
+<div *ngIf="shows" class="shows">
   <a *ngFor="let show of shows; trackBy trackByShowId" class="show">
     <div class="show-image">
       <img src="{{show.image.medium}}" alt="{{show.name}}" />

@@ -1,4 +1,6 @@
-<p>
+<div *ngIf="!show" class="message">Loading shows...</div>
+<div *ngIf="show">
+  <p>
     <a>&lt;&lt; Back to show list</a>
   </p>
   <div class="details">
@@ -17,3 +19,5 @@
       ></div>
     </div>
   </div>
+</div>
+<app-episode-list [showId]="showId"></app-episode-list>
