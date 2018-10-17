@@ -1,0 +1,13 @@
+@import "../setup.scss";
+
+.header {
+  display: block;
+  height: 8rem;
+  background: black url("/assets/images/logo.jpg") no-repeat;
+  background-position: 50% 0;
+  background-size: 340px 174px;
+  cursor: pointer;
+  &:hover {
+    background-color: black;
+  }
+}

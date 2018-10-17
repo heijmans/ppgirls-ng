@@ -1,0 +1,19 @@
+<p>
+    <a>&lt;&lt; Back to show list</a>
+  </p>
+  <div class="details">
+    <img
+      src="{{show.image.original}}"
+      alt="{{show.name}}"
+      class="details-image details-image-show"
+    />
+    <div class="details-card">
+      <div class="details-title">
+        {{show | showTitle}}
+      </div>
+      <div
+        class="details-summary"
+        [innerHTML]="show.summary | safeHtml"
+      ></div>
+    </div>
+  </div>

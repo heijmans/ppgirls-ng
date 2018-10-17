@@ -1,0 +1,10 @@
+<div class="shows">
+  <a *ngFor="let show of shows; trackBy trackByShowId" class="show">
+    <div class="show-image">
+      <img src="{{show.image.medium}}" alt="{{show.name}}" />
+    </div>
+    <div class="show-name">
+      {{show | showTitle}}
+    </div>
+  </a>
+</div>

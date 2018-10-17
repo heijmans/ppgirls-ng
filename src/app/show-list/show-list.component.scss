@@ -1,0 +1,32 @@
+@import "../../setup.scss";
+
+.show {
+  display: block;
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $blossom-light;
+  }
+}
+.show-image,
+.show-name {
+  margin: auto;
+  width: 14rem;
+}
+.show-image img {
+  display: block;
+  width: 100%;
+}
+.show-name {
+  padding-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .shows {
+    display: flex;
+    justify-content: center;
+  }
+}

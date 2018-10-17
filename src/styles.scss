@@ -1,0 +1,23 @@
+@import "setup.scss";
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Avenir, "Avenir Next", Roboto, Calibri, "Helvetica Neue", Arial, Helvetica,
+    sans-serif;
+  color: $primary;
+
+  background: white url("/assets/images/background.png") repeat-y;
+  background-position: 50% 0;
+  background-size: 52px 8px;
+}
+
+a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  @extend %hover;
+  color: $bubbles-dark;
+  &:hover {
+    color: $buttercup;
+  }
+}

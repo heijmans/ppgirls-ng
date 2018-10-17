@@ -1,0 +1,21 @@
+$primary: #333;
+
+$blossom: #f67;
+$bubbles: #3ae;
+$buttercup: #4b3;
+
+$blossom-light: lighten($blossom, 25);
+$bubbles-light: lighten($bubbles, 35);
+$buttercup-light: lighten($buttercup, 25);
+
+$blossom-dark: darken($blossom, 25);
+$bubbles-dark: darken($bubbles, 25);
+$buttercup-dark: darken($buttercup, 25);
+
+%hover {
+  cursor: pointer;
+  &:hover {
+    color: $buttercup;
+    background-color: $blossom-light;
+  }
+}
