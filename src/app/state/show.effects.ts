@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { Actions, Effect } from "@ngrx/effects";
+import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Observable } from "rxjs";
 import { filter, map, switchMap, withLatestFrom } from "rxjs/operators";
 import {
@@ -29,13 +29,15 @@ export class ShowEffects {
     private store: Store<IState>,
     private showService: ShowService,
   ) {
-    this.receiveShows$ = this.actions$.ofType<IRequestShowsAction>(REQUEST_SHOWS).pipe(
+    this.receiveShows$ = this.actions$.pipe(
+      ofType<IRequestShowsAction>(REQUEST_SHOWS),
       withLatestFrom(this.store),
       filter(([_, state]) => !getShows(state)),
       switchMap(() => this.fetchShows()),
     );
 
-    this.receiveEpisodes$ = this.actions$.ofType<IRequestEpisodesAction>(REQUEST_EPISODES).pipe(
+    this.receiveEpisodes$ = this.actions$.pipe(
+      ofType<IRequestEpisodesAction>(REQUEST_EPISODES),
       withLatestFrom(this.store),
       filter(([{ showId }, state]) => !getEpisodes(state, showId)),
       switchMap(([{ showId }, _]) => this.fetchEpisodes(showId)),

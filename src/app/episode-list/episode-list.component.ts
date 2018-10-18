@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Store } from "@ngrx/store";
+import { Store, select } from "@ngrx/store";
 import { IEpisode, IState } from "../state/state";
 import { requestEpisodes } from "../state/actions";
 import { getEpisodes } from "../state/selectors";
@@ -42,7 +42,7 @@ export class EpisodeListComponent implements OnInit {
     // TODO: handle showId changes
     this.store.dispatch(requestEpisodes(this.showId!));
 
-    this.store.select((state) => getEpisodes(state, this.showId!)).subscribe((episodes) => {
+    this.store.pipe(select((state) => getEpisodes(state, this.showId!))).subscribe((episodes) => {
       if (episodes) {
         this.seasons = groupBySeason(episodes);
       }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Store } from "@ngrx/store";
+import { Store, select } from "@ngrx/store";
 import { IShow, IState } from "../state/state";
 import { getShows } from "../state/selectors";
 import { requestShows } from "../state/actions";
@@ -17,7 +17,7 @@ export class ShowListComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(requestShows());
 
-    this.store.select(getShows).subscribe((shows) => {
+    this.store.pipe(select(getShows)).subscribe((shows) => {
       this.shows = shows;
     });
   }

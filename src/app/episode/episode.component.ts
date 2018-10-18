@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { Store } from "@ngrx/store";
+import { Store, select } from "@ngrx/store";
 import { switchMap, tap } from "rxjs/operators";
 import { IEpisode, IShow, IState } from "../state/state";
 import { requestShows, requestEpisodes } from "../state/actions";
@@ -34,14 +34,14 @@ export class EpisodeComponent implements OnInit {
       }),
     );
     param$
-      .pipe(switchMap(() => this.store.select((state) => getShow(state, this.showId!))))
+      .pipe(switchMap(() => this.store.pipe(select((state) => getShow(state, this.showId!)))))
       .subscribe((show) => {
         this.show = show;
       });
     param$
       .pipe(
         switchMap(() =>
-          this.store.select((state) => getEpisode(state, this.showId!, this.episodeId!)),
+          this.store.pipe(select((state) => getEpisode(state, this.showId!, this.episodeId!))),
         ),
       )
       .subscribe((episode) => {
