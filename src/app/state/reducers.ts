@@ -1,3 +1,4 @@
+import { routerReducer } from "@ngrx/router-store";
 import { ActionReducerMap } from "@ngrx/store";
 import {
   REQUEST_SHOWS,
@@ -6,7 +7,7 @@ import {
   RECEIVE_EPISODES,
   AppAction,
 } from "./actions";
-import { IState, ILoadEntry, IShow, IEpisodesByShow } from "./state";
+import { IState, ILoadEntry, IShow, IEpisodesByShow, SimpleRouterState } from "./state";
 
 export function shows(state: ILoadEntry<IShow[]> = {}, action: AppAction): ILoadEntry<IShow[]> {
   switch (action.type) {
@@ -32,7 +33,8 @@ export function episodesByShowId(state: IEpisodesByShow = {}, action: AppAction)
   }
 }
 
-export const reducers: ActionReducerMap<IState, AppAction> = {
+export const reducers: ActionReducerMap<IState, any> = {
   shows,
   episodesByShowId,
+  router: routerReducer,
 };

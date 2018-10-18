@@ -1,4 +1,4 @@
-import { IEpisode, IShow, IState } from "./state";
+import { IEpisode, IShow, IState, IParams } from "./state";
 
 export function getShows(state: IState): IShow[] | undefined {
   const { shows } = state;
@@ -18,4 +18,9 @@ export function getEpisodes(state: IState, showId: number): IEpisode[] | undefin
 export function getEpisode(state: IState, showId: number, episodeId: number): IEpisode | undefined {
   const episodes = getEpisodes(state, showId);
   return episodes && episodes.find((episode) => episode.id === episodeId);
+}
+
+export function getParams(state: IState): IParams {
+  const { router } = state;
+  return router ? router.state.params : {};
 }

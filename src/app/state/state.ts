@@ -1,3 +1,5 @@
+import { RouterReducerState } from "@ngrx/router-store";
+
 export interface IImage {
   medium: string;
   original: string;
@@ -29,9 +31,20 @@ export interface IEpisodesByShow {
   [showId: number]: ILoadEntry<IEpisode[]> | undefined;
 }
 
+export interface IParams {
+  [key: string]: string | undefined;
+}
+
+export interface SimpleRouterState {
+  url: string;
+  params: IParams;
+  queryParams: IParams;
+}
+
 export interface IState {
   shows: ILoadEntry<IShow[]>;
   episodesByShowId: IEpisodesByShow;
+  router?: RouterReducerState<SimpleRouterState>;
 }
 
 export const INITIAL_STATE: IState = { shows: {}, episodesByShowId: {} };

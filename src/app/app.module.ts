@@ -1,9 +1,9 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { RouterModule, RouterStateSnapshot } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { StoreModule } from "@ngrx/store";
-import { StoreRouterConnectingModule } from "@ngrx/router-store";
+import { StoreRouterConnectingModule, RouterStateSerializer } from "@ngrx/router-store";
 import { EffectsModule } from "@ngrx/effects";
 import { AppComponent } from "./app.component";
 import { ShowListComponent } from "./show-list/show-list.component";
@@ -15,7 +15,18 @@ import { EpisodeComponent } from "./episode/episode.component";
 import { routes } from "./routes";
 import { reducers } from "./state/reducers";
 import { ShowEffects } from "./state/show.effects";
-import { INITIAL_STATE } from "./state/state";
+import { INITIAL_STATE, SimpleRouterState } from "./state/state";
+
+export class CustomSerializer implements RouterStateSerializer<SimpleRouterState> {
+  serialize(routerState: RouterStateSnapshot): SimpleRouterState {
+    const { url, root } = routerState;
+    let route = root;
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    return { url, params: route.params, queryParams: root.queryParams };
+  }
+}
 
 @NgModule({
   declarations: [
@@ -35,7 +46,7 @@ import { INITIAL_STATE } from "./state/state";
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([ShowEffects]),
   ],
-  providers: [],
+  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
