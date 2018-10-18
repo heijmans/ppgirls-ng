@@ -1,0 +1,9 @@
+{
+  "fixturesFolder": false,
+  "ignoreTestFiles": ["tsconfig.json"],
+  "integrationFolder": "cypress",
+  "pluginsFile": false,
+  "supportFile": false,
+  "screenshotsFolder": "tmp/cypress-screenshots/",
+  "videosFolder": "tmp/cypress-videos/"
+}

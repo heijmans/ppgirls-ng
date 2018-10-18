@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { StoreModule } from "@ngrx/store";
+import { StoreRouterConnectingModule } from "@ngrx/router-store";
 import { EffectsModule } from "@ngrx/effects";
 import { AppComponent } from "./app.component";
 import { ShowListComponent } from "./show-list/show-list.component";
@@ -31,6 +32,7 @@ import { INITIAL_STATE } from "./state/state";
     RouterModule.forRoot(routes),
     HttpClientModule,
     StoreModule.forRoot(reducers, { initialState: INITIAL_STATE }),
+    StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([ShowEffects]),
   ],
   providers: [],
