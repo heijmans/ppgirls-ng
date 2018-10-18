@@ -1,10 +1,8 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
 import { Store, select } from "@ngrx/store";
-import { tap, switchMap } from "rxjs/operators";
 import { IEpisode, IShow, IState } from "../state/state";
 import { requestShows, requestEpisodes } from "../state/actions";
-import { getShow, getEpisodes } from "../state/selectors";
+import { getParams, getSelectedShow, getSelectedEpisodes } from "../state/selectors";
 
 @Component({
   selector: "app-show",
@@ -13,30 +11,25 @@ import { getShow, getEpisodes } from "../state/selectors";
 })
 export class ShowComponent {
   showId: number | undefined;
-
   show: IShow | undefined;
-
   episodes: IEpisode[] | undefined;
 
-  constructor(private route: ActivatedRoute, private store: Store<IState>) {
+  constructor(private store: Store<IState>) {
     this.store.dispatch(requestShows());
-    const params$ = this.route.paramMap.pipe(
-      tap((params) => {
-        this.showId = parseInt(params.get("showId") || "0", 10);
-        this.store.dispatch(requestEpisodes(this.showId));
-      }),
-    );
 
-    params$
-      .pipe(switchMap(() => this.store.pipe(select((state) => getShow(state, this.showId!)))))
-      .subscribe((show) => {
-        this.show = show;
-      });
+    this.store.pipe(select(getParams)).subscribe(({ showId }) => {
+      if (showId && showId !== this.showId) {
+        this.showId = showId;
+        this.store.dispatch(requestEpisodes(showId!));
+      }
+    });
 
-    params$
-      .pipe(switchMap(() => this.store.pipe(select((state) => getEpisodes(state, this.showId!)))))
-      .subscribe((episodes) => {
-        this.episodes = episodes;
-      });
+    this.store.pipe(select(getSelectedShow)).subscribe((show) => {
+      this.show = show;
+    });
+
+    this.store.pipe(select(getSelectedEpisodes)).subscribe((episodes) => {
+      this.episodes = episodes;
+    });
   }
 }

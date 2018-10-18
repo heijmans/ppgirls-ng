@@ -37,3 +37,18 @@ export function getParams(state: IState): IAppParams {
     episodeId: episodeId ? parseInt(episodeId, 10) : undefined,
   };
 }
+
+export function getSelectedShow(state: IState): IShow | undefined {
+  const { showId } = getParams(state);
+  return showId ? getShow(state, showId) : undefined;
+}
+
+export function getSelectedEpisodes(state: IState): IEpisode[] | undefined {
+  const { showId } = getParams(state);
+  return showId ? getEpisodes(state, showId) : undefined;
+}
+
+export function getSelectedEpisode(state: IState): IEpisode | undefined {
+  const { showId, episodeId } = getParams(state);
+  return showId && episodeId ? getEpisode(state, showId, episodeId) : undefined;
+}
