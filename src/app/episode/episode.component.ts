@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Store, select } from "@ngrx/store";
 import { switchMap, tap } from "rxjs/operators";
@@ -6,24 +6,19 @@ import { IEpisode, IShow, IState } from "../state/state";
 import { requestShows, requestEpisodes } from "../state/actions";
 import { getShow, getEpisode } from "../state/selectors";
 
-const NO_IMAGE_URL = "https://static.tvmaze.com/images/no-img/no-img-landscape-text.png";
-const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
-
 @Component({
   selector: "app-episode",
   templateUrl: "./episode.component.html",
   styleUrls: ["./episode.component.scss"],
 })
-export class EpisodeComponent implements OnInit {
+export class EpisodeComponent {
   showId: number | undefined;
   episodeId: number | undefined;
 
   show: IShow | undefined;
   episode: IEpisode | undefined;
 
-  constructor(private route: ActivatedRoute, private store: Store<IState>) {}
-
-  ngOnInit() {
+  constructor(private route: ActivatedRoute, private store: Store<IState>) {
     this.store.dispatch(requestShows());
 
     const param$ = this.route.paramMap.pipe(

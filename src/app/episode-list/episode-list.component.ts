@@ -1,8 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { Store, select } from "@ngrx/store";
-import { IEpisode, IState } from "../state/state";
-import { requestEpisodes } from "../state/actions";
-import { getEpisodes } from "../state/selectors";
+import { Component, Input } from "@angular/core";
+import { IEpisode } from "../state/state";
 
 interface ISeason {
   id: string;
@@ -30,30 +27,26 @@ export function groupBySeason(episodes: IEpisode[]): ISeason[] {
   templateUrl: "./episode-list.component.html",
   styleUrls: ["./episode-list.component.scss"],
 })
-export class EpisodeListComponent implements OnInit {
+export class EpisodeListComponent {
   @Input()
   showId: number | undefined;
 
-  seasons: ISeason[] | undefined;
-
-  constructor(private store: Store<IState>) {}
-
-  ngOnInit() {
-    // TODO: handle showId changes
-    this.store.dispatch(requestEpisodes(this.showId!));
-
-    this.store.pipe(select((state) => getEpisodes(state, this.showId!))).subscribe((episodes) => {
-      if (episodes) {
-        this.seasons = groupBySeason(episodes);
-      }
-    });
+  @Input()
+  set episodes(episodes: IEpisode[] | undefined) {
+    if (episodes) {
+      this.seasons = groupBySeason(episodes);
+    }
   }
 
-  trackBySeasonId(index: number, season: ISeason): string {
+  seasons: ISeason[] | undefined;
+
+  constructor() {}
+
+  trackBySeasonId(_: number, season: ISeason): string {
     return season.id;
   }
 
-  trackByEpisodeId(index: number, episode: IEpisode): number {
+  trackByEpisodeId(_: number, episode: IEpisode): number {
     return episode.id;
   }
 }
