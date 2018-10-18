@@ -5,7 +5,8 @@ import { Store, StoreModule } from "@ngrx/store";
 import { ShowComponent } from "./show.component";
 import { ShowTitlePipe } from "../pipes/show-title.pipe";
 import { SafeHtmlPipe } from "../pipes/safe-html.pipe";
-import { IEpisode, IState, makeSimpleRouteState, IShow, IImage } from "../state/state";
+import { IEpisode, IState } from "../state/state";
+import { MOCK_STATE, MOCK_EMPTY_STATE, MOCK_EPISODES, MOCK_SHOW } from "../state/state.spec";
 import { reducers } from "../state/reducers";
 import { requestShows, requestEpisodes } from "../state/actions";
 
@@ -17,27 +18,6 @@ class EpisodeListMockComponent {
   episodes: IEpisode[] | undefined;
 }
 
-const IMAGE: IImage = {
-  medium: "medium.jpg",
-  original: "original.jpg",
-};
-const SHOW: IShow = { id: 10, name: "PP2", premiered: "2013-01-10", image: IMAGE };
-const EPISODES: IEpisode[] = [
-  { id: 101, name: "EP101", image: IMAGE, season: 1, number: 1 },
-  { id: 102, name: "EP102", image: IMAGE, season: 1, number: 2 },
-  { id: 103, name: "EP103", image: IMAGE, season: 1, number: 3 },
-];
-const INITIAL_STATE: IState = {
-  shows: { data: [SHOW] },
-  episodesByShowId: { 10: { data: EPISODES } },
-  router: makeSimpleRouteState({ params: { showId: "10" } }),
-};
-const EMPTY_STATE: IState = {
-  shows: {},
-  episodesByShowId: {},
-  router: makeSimpleRouteState({ params: { showId: "11" } }),
-};
-
 describe("ShowComponent", () => {
   let store: Store<IState>;
   let fixture: ComponentFixture<ShowComponent>;
@@ -46,7 +26,7 @@ describe("ShowComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ShowComponent, SafeHtmlPipe, ShowTitlePipe, EpisodeListMockComponent],
-      imports: [StoreModule.forRoot(reducers, { initialState: INITIAL_STATE })],
+      imports: [StoreModule.forRoot(reducers, { initialState: MOCK_STATE })],
     }).compileComponents();
   }));
 
@@ -61,8 +41,8 @@ describe("ShowComponent", () => {
 
   it("should get the showId, the show and the episodes", () => {
     expect(component.showId).toEqual(10);
-    expect(component.show).toEqual(SHOW);
-    expect(component.episodes).toEqual(EPISODES);
+    expect(component.show).toEqual(MOCK_SHOW);
+    expect(component.episodes).toEqual(MOCK_EPISODES);
   });
 
   it("request the show and the episodes", () => {
@@ -81,7 +61,7 @@ describe("ShowComponent", () => {
       By.directive(EpisodeListMockComponent),
     ).componentInstance;
     expect(episodeList.showId).toEqual(10);
-    expect(episodeList.episodes).toEqual(EPISODES);
+    expect(episodeList.episodes).toEqual(MOCK_EPISODES);
   });
 });
 
@@ -92,7 +72,7 @@ describe("ShowComponent without show", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ShowComponent, SafeHtmlPipe, ShowTitlePipe, EpisodeListMockComponent],
-      imports: [StoreModule.forRoot(reducers, { initialState: EMPTY_STATE })],
+      imports: [StoreModule.forRoot(reducers, { initialState: MOCK_EMPTY_STATE })],
     }).compileComponents();
   }));
 
