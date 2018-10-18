@@ -37,7 +37,7 @@ export class ShowEffects {
 
     this.receiveEpisodes$ = this.actions$.ofType<IRequestEpisodesAction>(REQUEST_EPISODES).pipe(
       withLatestFrom(this.store),
-      filter(([{ showId }, state]) => !getEpisodes(showId)(state)),
+      filter(([{ showId }, state]) => !getEpisodes(state, showId)),
       switchMap(([{ showId }, _]) => this.fetchEpisodes(showId)),
     );
   }

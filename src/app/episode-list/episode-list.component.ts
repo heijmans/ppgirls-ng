@@ -42,7 +42,7 @@ export class EpisodeListComponent implements OnInit {
     // TODO: handle showId changes
     this.store.dispatch(requestEpisodes(this.showId!));
 
-    this.store.select(getEpisodes(this.showId!)).subscribe((episodes) => {
+    this.store.select((state) => getEpisodes(state, this.showId!)).subscribe((episodes) => {
       if (episodes) {
         this.seasons = groupBySeason(episodes);
       }

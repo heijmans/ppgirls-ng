@@ -27,7 +27,7 @@ export class ShowComponent implements OnInit {
           this.showId = parseInt(params.get("showId") || "0", 10);
         }),
       )
-      .pipe(switchMap(() => this.store.select(getShow(this.showId!))))
+      .pipe(switchMap(() => this.store.select((state) => getShow(state, this.showId!))))
       .subscribe((show) => {
         this.show = show;
       });

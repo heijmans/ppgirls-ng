@@ -33,11 +33,17 @@ export class EpisodeComponent implements OnInit {
         this.store.dispatch(requestEpisodes(this.showId));
       }),
     );
-    param$.pipe(switchMap(() => this.store.select(getShow(this.showId!)))).subscribe((show) => {
-      this.show = show;
-    });
     param$
-      .pipe(switchMap(() => this.store.select(getEpisode(this.showId!, this.episodeId!))))
+      .pipe(switchMap(() => this.store.select((state) => getShow(state, this.showId!))))
+      .subscribe((show) => {
+        this.show = show;
+      });
+    param$
+      .pipe(
+        switchMap(() =>
+          this.store.select((state) => getEpisode(state, this.showId!, this.episodeId!)),
+        ),
+      )
       .subscribe((episode) => {
         this.episode = episode;
       });
