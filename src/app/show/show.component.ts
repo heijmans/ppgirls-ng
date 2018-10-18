@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Store, select } from "@ngrx/store";
-import { Observable } from "rxjs";
 import { tap, switchMap } from "rxjs/operators";
 import { IEpisode, IShow, IState } from "../state/state";
 import { requestShows, requestEpisodes } from "../state/actions";
