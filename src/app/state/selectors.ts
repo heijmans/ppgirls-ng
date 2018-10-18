@@ -20,7 +20,20 @@ export function getEpisode(state: IState, showId: number, episodeId: number): IE
   return episodes && episodes.find((episode) => episode.id === episodeId);
 }
 
-export function getParams(state: IState): IParams {
+export interface IAppParams {
+  showId?: number;
+  episodeId?: number;
+}
+
+export function getParams(state: IState): IAppParams {
   const { router } = state;
-  return router ? router.state.params : {};
+  if (!router) {
+    return {};
+  }
+  const params = router.state.params;
+  const { showId, episodeId } = params;
+  return {
+    showId: showId ? parseInt(showId, 10) : undefined,
+    episodeId: episodeId ? parseInt(episodeId, 10) : undefined,
+  };
 }
