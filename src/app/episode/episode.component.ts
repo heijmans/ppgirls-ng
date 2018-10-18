@@ -11,17 +11,15 @@ import { getParams, getSelectedShow, getSelectedEpisode } from "../state/selecto
 })
 export class EpisodeComponent {
   showId: number | undefined;
-  episodeId: number | undefined;
   show: IShow | undefined;
   episode: IEpisode | undefined;
 
   constructor(private store: Store<IState>) {
     this.store.dispatch(requestShows());
 
-    this.store.pipe(select(getParams)).subscribe(({ showId, episodeId }) => {
-      if (showId && episodeId && (showId !== this.showId || episodeId !== this.episodeId)) {
+    this.store.pipe(select(getParams)).subscribe(({ showId }) => {
+      if (showId && showId !== this.showId) {
         this.showId = showId;
-        this.episodeId = episodeId;
         this.store.dispatch(requestEpisodes(showId!));
       }
     });
