@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
+import { RouterTestingModule } from "@angular/router/testing";
+import { StoreModule } from "@ngrx/store";
 import { EpisodeComponent } from "./episode.component";
+import { SafeHtmlPipe } from "../pipes/safe-html.pipe";
+import { reducers } from "../state/reducers";
 
 describe("EpisodeComponent", () => {
   let component: EpisodeComponent;
@@ -8,7 +11,8 @@ describe("EpisodeComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EpisodeComponent],
+      declarations: [EpisodeComponent, SafeHtmlPipe],
+      imports: [RouterTestingModule, StoreModule.forRoot(reducers)],
     }).compileComponents();
   }));
 
