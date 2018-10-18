@@ -40,14 +40,14 @@ describe("ShowComponent", () => {
   });
 
   it("should get the showId, the show and the episodes", () => {
-    expect(component.showId).toEqual(10);
+    expect(component.showId).toEqual(5);
     expect(component.show).toEqual(MOCK_SHOW);
     expect(component.episodes).toEqual(MOCK_EPISODES);
   });
 
   it("request the show and the episodes", () => {
     expect(store.dispatch).toHaveBeenCalledWith(requestShows());
-    expect(store.dispatch).toHaveBeenCalledWith(requestEpisodes(10));
+    expect(store.dispatch).toHaveBeenCalledWith(requestEpisodes(5));
   });
 
   it("should show the show", () => {
@@ -60,7 +60,7 @@ describe("ShowComponent", () => {
     const episodeList: EpisodeListMockComponent = fixture.debugElement.query(
       By.directive(EpisodeListMockComponent),
     ).componentInstance;
-    expect(episodeList.showId).toEqual(10);
+    expect(episodeList.showId).toEqual(5);
     expect(episodeList.episodes).toEqual(MOCK_EPISODES);
   });
 });
@@ -83,7 +83,7 @@ describe("ShowComponent without show", () => {
   });
 
   it("should get the showId, but not the show and the episodes", () => {
-    expect(component.showId).toEqual(11);
+    expect(component.showId).toEqual(6);
     expect(component.show).toBeUndefined();
     expect(component.episodes).toBeUndefined();
   });

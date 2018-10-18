@@ -49,15 +49,17 @@ export interface IState {
 
 export const INITIAL_STATE: IState = { shows: {}, episodesByShowId: {} };
 
+export interface ISimpleRouteOptions {
+  url?: string;
+  params?: IParams;
+  queryParams?: IParams;
+}
+
 export function makeSimpleRouteState({
   url,
   params,
   queryParams,
-}: {
-  url?: string;
-  params?: IParams;
-  queryParams?: IParams;
-}): RouterReducerState<SimpleRouterState> {
+}: ISimpleRouteOptions): RouterReducerState<SimpleRouterState> {
   const state: SimpleRouterState = {
     url: url || "/",
     params: params || {},

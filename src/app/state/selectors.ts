@@ -1,4 +1,4 @@
-import { IEpisode, IShow, IState, IParams } from "./state";
+import { IEpisode, IShow, IState } from "./state";
 
 export function getShows(state: IState): IShow[] | undefined {
   const { shows } = state;
