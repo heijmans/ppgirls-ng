@@ -11,7 +11,8 @@
     "prettier": "prettier --write 'src/**/*.ts' 'src/**/*.js*' 'src/**/*.scss' 'e2e/**/*.ts' 'e2e/**/*.js*' '*.js*'",
     "pq": "pretty-quick",
     "cypress": "cypress run",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "ok": "yarn pq && yarn lint"
   },
   "private": true,
   "dependencies": {
