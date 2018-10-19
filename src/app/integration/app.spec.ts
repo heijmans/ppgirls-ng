@@ -1,23 +1,23 @@
-import { TestBed, async, ComponentFixture, tick, fakeAsync } from "@angular/core/testing";
-import { AppComponent } from "../app.component";
-import { RouterTestingModule } from "@angular/router/testing";
-import { routes } from "../routes";
-import { APP_BASE_HREF, CommonModule, Location } from "@angular/common";
-import { Router } from "@angular/router";
-import { SafeHtmlPipe } from "../pipes/safe-html.pipe";
-import { ShowListComponent } from "../show-list/show-list.component";
-import { ShowComponent } from "../show/show.component";
-import { ShowTitlePipe } from "../pipes/show-title.pipe";
-import { EpisodeListComponent } from "../episode-list/episode-list.component";
-import { EpisodeComponent } from "../episode/episode.component";
+import { APP_BASE_HREF, Location } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
-import { StoreModule } from "@ngrx/store";
-import { reducers } from "../state/reducers";
-import { CustomRouteSerializer, INITIAL_STATE } from "../state/state";
-import { RouterStateSerializer, StoreRouterConnectingModule } from "@ngrx/router-store";
+import { TestBed, async, ComponentFixture, tick, fakeAsync } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
 import { EffectsModule } from "@ngrx/effects";
+import { RouterStateSerializer, StoreRouterConnectingModule } from "@ngrx/router-store";
+import { StoreModule } from "@ngrx/store";
+import { Subject } from "rxjs";
+import { AppComponent } from "../app.component";
+import { EpisodeComponent } from "../episode/episode.component";
+import { EpisodeListComponent } from "../episode-list/episode-list.component";
+import { SafeHtmlPipe } from "../pipes/safe-html.pipe";
+import { ShowTitlePipe } from "../pipes/show-title.pipe";
+import { routes } from "../routes";
+import { ShowComponent } from "../show/show.component";
+import { ShowListComponent } from "../show-list/show-list.component";
+import { reducers } from "../state/reducers";
 import { ShowEffects } from "../state/show.effects";
-import { of, Subject } from "rxjs";
+import { CustomRouteSerializer, INITIAL_STATE } from "../state/state";
 import { MOCK_EPISODES, MOCK_SHOW } from "../state/state.mock";
 
 describe("AppComponent", () => {
@@ -97,12 +97,11 @@ describe("AppComponent", () => {
     expect(shows[0].textContent).toContain("PP2 (2013)");
     shows[0].click();
 
-    tick();
-    expect(location.path()).toBe("/shows/5");
-    app.detectChanges();
+    checkUrl("/shows/5");
 
     expect(element.querySelector(".details-title").textContent).toContain("PP2 (2013)");
     expect(element.querySelector(".message").textContent).toContain("Loading episodes...");
+    expect(element.querySelector(".episode-row")).toBeNull();
 
     httpResponse(MOCK_EPISODES);
     expect(element.querySelector(".message")).toBeNull();
@@ -111,9 +110,7 @@ describe("AppComponent", () => {
     expect(episodes[1].textContent).toContain("EP102");
     episodes[1].click();
 
-    tick();
-    expect(location.path()).toBe("/shows/5/episodes/102");
-    app.detectChanges();
+    checkUrl("/shows/5/episodes/102");
 
     expect(element.querySelector(".message")).toBeNull();
     expect(element.querySelector(".details-title").textContent).toContain("EP102");
@@ -129,6 +126,7 @@ describe("AppComponent", () => {
     httpResponse([{ show: MOCK_SHOW }]);
     expect(element.querySelector(".details-title").textContent).toContain("PP2 (2013)");
     expect(element.querySelector(".message").textContent).toContain("Loading episodes...");
+    expect(element.querySelector(".episode-row")).toBeNull();
 
     httpResponse(MOCK_EPISODES);
     expect(element.querySelector(".message")).toBeNull();
@@ -137,9 +135,7 @@ describe("AppComponent", () => {
     expect(episodes[1].textContent).toContain("EP102");
     episodes[1].click();
 
-    tick();
-    expect(location.path()).toBe("/shows/5/episodes/102");
-    app.detectChanges();
+    checkUrl("/shows/5/episodes/102");
 
     expect(element.querySelector(".message")).toBeNull();
     expect(element.querySelector(".details-title").textContent).toContain("EP102");
