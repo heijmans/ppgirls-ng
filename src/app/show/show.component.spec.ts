@@ -1,22 +1,14 @@
-import { Component, Input } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { Store } from "@ngrx/store";
 import { ShowComponent } from "./show.component";
 import { ShowTitlePipe } from "../pipes/show-title.pipe";
 import { SafeHtmlPipe } from "../pipes/safe-html.pipe";
-import { IEpisode, IState } from "../state/state";
+import { IState } from "../state/state";
 import { MOCK_STATE, MOCK_EMPTY_STATE, MOCK_EPISODES, MOCK_SHOW } from "../state/state.spec";
 import { fetchShows, fetchEpisodes } from "../state/actions";
-import { MockStore } from "../lib/helpers.spec";
-
-@Component({ selector: "app-episode-list", template: "" })
-class EpisodeListMockComponent {
-  @Input()
-  showId: number | undefined;
-  @Input()
-  episodes: IEpisode[] | undefined;
-}
+import { MockStore, createMockComponent, createMockPipe } from "../lib/helpers.spec";
+import { EpisodeListComponent } from "../episode-list/episode-list.component";
 
 describe("ShowComponent", () => {
   let store: MockStore<IState>;
@@ -25,7 +17,12 @@ describe("ShowComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ShowComponent, SafeHtmlPipe, ShowTitlePipe, EpisodeListMockComponent],
+      declarations: [
+        ShowComponent,
+        ShowTitlePipe,
+        createMockComponent(EpisodeListComponent),
+        createMockPipe(SafeHtmlPipe),
+      ],
       providers: [{ provide: Store, useValue: new MockStore() }],
     }).compileComponents();
   }));
@@ -57,7 +54,7 @@ describe("ShowComponent", () => {
     });
 
     it("should not show the episode list", () => {
-      expect(fixture.debugElement.query(By.directive(EpisodeListMockComponent))).toBeNull();
+      expect(fixture.debugElement.query(By.css("app-episode-list"))).toBeNull();
     });
   });
 
@@ -85,8 +82,8 @@ describe("ShowComponent", () => {
     });
 
     it("should set the right properties on the episode list", () => {
-      const episodeList: EpisodeListMockComponent = fixture.debugElement.query(
-        By.directive(EpisodeListMockComponent),
+      const episodeList: EpisodeListComponent = fixture.debugElement.query(
+        By.css("app-episode-list"),
       ).componentInstance;
       expect(episodeList.showId).toEqual(5);
       expect(episodeList.episodes).toEqual(MOCK_EPISODES);
