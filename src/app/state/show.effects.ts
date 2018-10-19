@@ -1,14 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
-import { Observable } from "rxjs";
+import { Observable, merge, of } from "rxjs";
 import { filter, map, switchMap, withLatestFrom } from "rxjs/operators";
 import {
   AppAction,
-  IRequestShowsAction,
-  IRequestEpisodesAction,
-  REQUEST_SHOWS,
-  REQUEST_EPISODES,
+  FETCH_SHOWS,
+  FETCH_EPISODES,
+  IFetchShowsAction,
+  IFetchEpisodesAction,
+  requestShows,
+  requestEpisodes,
   receiveShows,
   receiveEpisodes,
 } from "./actions";
@@ -30,25 +32,27 @@ export class ShowEffects {
     private showService: ShowService,
   ) {
     this.receiveShows$ = this.actions$.pipe(
-      ofType<IRequestShowsAction>(REQUEST_SHOWS),
+      ofType<IFetchShowsAction>(FETCH_SHOWS),
       withLatestFrom(this.store),
       filter(([_, state]) => !getShows(state)),
-      switchMap(() => this.fetchShows()),
+      switchMap(() => merge(of(requestShows()), this.getShows())),
     );
 
     this.receiveEpisodes$ = this.actions$.pipe(
-      ofType<IRequestEpisodesAction>(REQUEST_EPISODES),
+      ofType<IFetchEpisodesAction>(FETCH_EPISODES),
       withLatestFrom(this.store),
       filter(([{ showId }, state]) => !getEpisodes(state, showId)),
-      switchMap(([{ showId }, _]) => this.fetchEpisodes(showId)),
+      switchMap(([{ showId }, _]) =>
+        merge(of(requestEpisodes(showId)), this.getEpisodes(showId)),
+      ),
     );
   }
 
-  fetchShows() {
+  getShows() {
     return this.showService.getShows().pipe(map((data) => receiveShows(data)));
   }
 
-  fetchEpisodes(showId: number) {
+  getEpisodes(showId: number) {
     return this.showService.getEpisodes(showId).pipe(map((data) => receiveEpisodes(showId, data)));
   }
 }

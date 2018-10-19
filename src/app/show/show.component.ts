@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Store, select } from "@ngrx/store";
 import { IEpisode, IShow, IState } from "../state/state";
-import { requestShows, requestEpisodes } from "../state/actions";
+import { fetchShows, fetchEpisodes } from "../state/actions";
 import { getParams, getSelectedShow, getSelectedEpisodes } from "../state/selectors";
 
 @Component({
@@ -15,12 +15,12 @@ export class ShowComponent {
   episodes: IEpisode[] | undefined;
 
   constructor(private store: Store<IState>) {
-    this.store.dispatch(requestShows());
+    this.store.dispatch(fetchShows());
 
     this.store.pipe(select(getParams)).subscribe(({ showId }) => {
       if (showId && showId !== this.showId) {
         this.showId = showId;
-        this.store.dispatch(requestEpisodes(showId!));
+        this.store.dispatch(fetchEpisodes(showId!));
       }
     });
 

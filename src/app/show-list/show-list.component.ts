@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Store, select } from "@ngrx/store";
 import { IShow, IState } from "../state/state";
 import { getShows } from "../state/selectors";
-import { requestShows } from "../state/actions";
+import { fetchShows } from "../state/actions";
 
 @Component({
   selector: "app-show-list",
@@ -13,7 +13,7 @@ export class ShowListComponent {
   shows: IShow[] | undefined;
 
   constructor(private store: Store<IState>) {
-    this.store.dispatch(requestShows());
+    this.store.dispatch(fetchShows());
     this.store.pipe(select(getShows)).subscribe((shows) => {
       this.shows = shows;
     });

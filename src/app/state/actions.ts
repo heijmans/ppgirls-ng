@@ -1,5 +1,17 @@
 import { IEpisode, IShow } from "./state";
 
+export const FETCH_SHOWS = "FETCH_SHOWS";
+
+export interface IFetchShowsAction {
+  type: "FETCH_SHOWS";
+}
+
+export function fetchShows(): IFetchShowsAction {
+  return {
+    type: FETCH_SHOWS,
+  };
+}
+
 export const REQUEST_SHOWS = "REQUEST_SHOWS";
 
 export interface IRequestShowsAction {
@@ -23,6 +35,20 @@ export function receiveShows(data: IShow[]): IReceiveShowsAction {
   return {
     type: RECEIVE_SHOWS,
     data,
+  };
+}
+
+export const FETCH_EPISODES = "FETCH_EPISODES";
+
+export interface IFetchEpisodesAction {
+  type: "FETCH_EPISODES";
+  showId: number;
+}
+
+export function fetchEpisodes(showId: number): IFetchEpisodesAction {
+  return {
+    type: FETCH_EPISODES,
+    showId,
   };
 }
 

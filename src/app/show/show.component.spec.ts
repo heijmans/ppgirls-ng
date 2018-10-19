@@ -8,7 +8,7 @@ import { SafeHtmlPipe } from "../pipes/safe-html.pipe";
 import { IEpisode, IState } from "../state/state";
 import { MOCK_STATE, MOCK_EMPTY_STATE, MOCK_EPISODES, MOCK_SHOW } from "../state/state.spec";
 import { reducers } from "../state/reducers";
-import { requestShows, requestEpisodes } from "../state/actions";
+import { fetchShows, fetchEpisodes } from "../state/actions";
 
 @Component({ selector: "app-episode-list", template: "" })
 class EpisodeListMockComponent {
@@ -46,8 +46,8 @@ describe("ShowComponent", () => {
   });
 
   it("request the show and the episodes", () => {
-    expect(store.dispatch).toHaveBeenCalledWith(requestShows());
-    expect(store.dispatch).toHaveBeenCalledWith(requestEpisodes(5));
+    expect(store.dispatch).toHaveBeenCalledWith(fetchShows());
+    expect(store.dispatch).toHaveBeenCalledWith(fetchEpisodes(5));
   });
 
   it("should show the show", () => {
