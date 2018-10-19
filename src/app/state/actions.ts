@@ -83,7 +83,9 @@ export function receiveEpisodes(showId: number, data: IEpisode[]): IReceiveEpiso
 }
 
 export type AppAction =
+  | IFetchShowsAction
   | IRequestShowsAction
   | IReceiveShowsAction
+  | IFetchEpisodesAction
   | IRequestEpisodesAction
   | IReceiveEpisodesAction;
