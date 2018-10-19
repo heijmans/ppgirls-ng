@@ -10,7 +10,7 @@ describe("SafeHtmlPipe", () => {
     sanitizer = jasmine.createSpyObj<DomSanitizer>("DomSanitizer", ["bypassSecurityTrustHtml"]);
   }));
 
-  it("should render the title", () => {
+  it("should call bypassSecurityTrustHtml", () => {
     const pipe = new SafeHtmlPipe(sanitizer);
     sanitizer.bypassSecurityTrustHtml.and.returnValue("ok");
     expect(pipe.transform("<b>OK!</b>")).toBe("ok");
