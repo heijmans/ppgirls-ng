@@ -4,5 +4,5 @@
     "outDir": "../out-tsc/app",
     "types": []
   },
-  "exclude": ["test.ts", "**/*.spec.ts", "**/*.test.ts"]
+  "exclude": ["test.ts", "wallabyTest.ts", "**/*.spec.ts", "**/*.test.ts"]
 }

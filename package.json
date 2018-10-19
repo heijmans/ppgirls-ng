@@ -40,6 +40,7 @@
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
+    "angular2-template-loader": "^0.6.2",
     "codelyzer": "~4.3.0",
     "cypress": "^3.1.0",
     "jasmine-core": "~2.99.1",
@@ -54,7 +55,8 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~2.9.2"
+    "typescript": "~2.9.2",
+    "wallaby-webpack": "^3.9.13"
   },
   "prettier": {
     "arrowParens": "always",
