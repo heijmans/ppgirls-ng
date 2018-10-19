@@ -6,7 +6,7 @@ import { IImage, IShow, IEpisode } from "./state";
 
 const API_HOST = "https://api.tvmaze.com";
 const NO_IMAGE_URL = "https://static.tvmaze.com/images/no-img/no-img-landscape-text.png";
-const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
+export const MISSING_IMAGE = { medium: NO_IMAGE_URL, original: NO_IMAGE_URL };
 
 export interface IImageOwner {
   image?: IImage;
@@ -14,7 +14,7 @@ export interface IImageOwner {
 
 // replace the image http urls with secure, https urls
 // replace missing images with placeholders
-export function fixImage<T extends IImageOwner>(item: T): T {
+function fixImage<T extends IImageOwner>(item: T): T {
   let { image } = item;
   if (image) {
     const { medium, original } = image;
