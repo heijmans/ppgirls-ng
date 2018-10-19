@@ -5,7 +5,7 @@ import { ShowComponent } from "./show.component";
 import { ShowTitlePipe } from "../pipes/show-title.pipe";
 import { SafeHtmlPipe } from "../pipes/safe-html.pipe";
 import { IState } from "../state/state";
-import { MOCK_STATE, MOCK_EMPTY_STATE, MOCK_EPISODES, MOCK_SHOW } from "../state/state.spec";
+import { MOCK_STATE, MOCK_EMPTY_STATE, MOCK_EPISODES, MOCK_SHOW } from "../state/state.mock";
 import { fetchShows, fetchEpisodes } from "../state/actions";
 import { MockStore, createMockComponent, createMockPipe } from "../lib/helpers.spec";
 import { EpisodeListComponent } from "../episode-list/episode-list.component";

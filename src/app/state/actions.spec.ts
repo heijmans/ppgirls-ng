@@ -12,7 +12,7 @@ import {
   REQUEST_SHOWS,
   requestShows,
 } from "./actions";
-import { MOCK_SHOW, MOCK_EPISODES } from "./state.spec";
+import { MOCK_SHOW, MOCK_EPISODES } from "./state.mock";
 
 describe("actions", () => {
   it("should create a fetch shows action", () => {

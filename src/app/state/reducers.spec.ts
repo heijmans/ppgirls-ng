@@ -1,6 +1,6 @@
 import { shows, episodesByShowId } from "./reducers";
 import { requestShows, receiveShows, requestEpisodes, receiveEpisodes } from "./actions";
-import { MOCK_SHOW, MOCK_EPISODES } from "./state.spec";
+import { MOCK_SHOW, MOCK_EPISODES } from "./state.mock";
 
 describe("shows reducer", () => {
   it("should handle a request action", () => {

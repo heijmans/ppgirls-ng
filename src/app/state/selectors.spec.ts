@@ -15,7 +15,7 @@ import {
   MOCK_SHOW,
   MOCK_EPISODES,
   mockStateWithRoute,
-} from "./state.spec";
+} from "./state.mock";
 
 describe("selectors", () => {
   it("should get the shows", () => {
