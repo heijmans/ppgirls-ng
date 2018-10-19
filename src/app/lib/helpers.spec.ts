@@ -64,12 +64,7 @@ export function createMockComponent(component: any): IMockClass {
 
 export function createMockPipe(pipe: any): IMockClass {
   const oldPipe = pipe as IMockClass;
-
   const newPipe: IMockClass = () => {};
-  newPipe.prototype.transform = (...args: any[]): string => {
-    return `${name}(${args.join(",")})`;
-  };
-
   const annotations = oldPipe.__annotations__;
   let name = "";
   if (annotations && annotations.length === 1 && annotations[0] instanceof Pipe) {
@@ -80,5 +75,10 @@ export function createMockPipe(pipe: any): IMockClass {
     throw new Error("is this a pipe class? cannot create mock pipe from: " + pipe);
   }
   copyMetadata(oldPipe, newPipe);
+
+  newPipe.prototype.transform = (...args: any[]): string => {
+    return `${name}(${args.join(",")})`;
+  };
+
   return newPipe;
 }
