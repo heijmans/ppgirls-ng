@@ -42,9 +42,7 @@ export class ShowEffects {
       ofType<IFetchEpisodesAction>(FETCH_EPISODES),
       withLatestFrom(this.store),
       filter(([{ showId }, state]) => !getEpisodes(state, showId)),
-      switchMap(([{ showId }, _]) =>
-        merge(of(requestEpisodes(showId)), this.getEpisodes(showId)),
-      ),
+      switchMap(([{ showId }, _]) => merge(of(requestEpisodes(showId)), this.getEpisodes(showId))),
     );
   }
 
