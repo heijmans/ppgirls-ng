@@ -51,14 +51,16 @@ module.exports = function(wallaby) {
 
   return {
     files: [
+      { pattern: "src/+(main|test).ts", ignore: true },
+      { pattern: "src/environments/**/*.*", ignore: true },
       { pattern: "src/**/*.+(ts|css|less|scss|sass|styl|html|json|svg)", load: false },
       { pattern: "src/**/*.d.ts", ignore: true },
-      { pattern: "src/**/*spec.ts", ignore: true },
+      { pattern: "src/**/*.spec.ts", ignore: true },
     ],
 
     tests: [
-      { pattern: "src/**/*spec.ts", load: false },
-      { pattern: "src/**/*e2e-spec.ts", ignore: true },
+      { pattern: "src/**/*.spec.ts", load: false },
+      { pattern: "src/**/*.e2e-spec.ts", ignore: true },
     ],
 
     testFramework: "jasmine",
