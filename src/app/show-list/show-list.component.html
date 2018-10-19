@@ -1,6 +1,6 @@
 <div *ngIf="!shows" class="message">Loading shows...</div>
 <div *ngIf="shows" class="shows">
-  <a *ngFor="let show of shows; trackBy trackByShowId" routerLink="/shows/{{show.id}}" class="show">
+  <a *ngFor="let show of shows; trackBy: trackByShowId" routerLink="/shows/{{show.id}}" class="show">
     <div class="show-image">
       <img src="{{show.image.medium}}" alt="{{show.name}}" />
     </div>

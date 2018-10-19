@@ -1,10 +1,10 @@
 <div *ngIf="!seasons" class="message">Loading episodes...</div>
 <div *ngIf="seasons" class="seasons">
-  <div *ngFor="let season of seasons; trackBy trackBySeasonId" class="season">
+  <div *ngFor="let season of seasons; trackBy: trackBySeasonId" class="season">
     <h2>Season {{season.id}}</h2>
     <table class="episodes-table">
       <tbody>
-        <tr *ngFor="let episode of season.episodes; trackBy trackByEpisodeId" routerLink="/shows/{{showId}}/episodes/{{episode.id}}" class="episode-row">
+        <tr *ngFor="let episode of season.episodes; trackBy: trackByEpisodeId" routerLink="/shows/{{showId}}/episodes/{{episode.id}}" class="episode-row">
           <td>
             <img src="{{episode.image.medium}}" alt="{{season.name}}" />
           </td>
