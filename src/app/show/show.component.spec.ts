@@ -30,16 +30,44 @@ describe("ShowComponent", () => {
     }).compileComponents();
   }));
 
-  describe("with show", () => {
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ShowComponent);
+    component = fixture.componentInstance;
+    store = TestBed.get(Store);
+    store.next(MOCK_EMPTY_STATE);
+    fixture.detectChanges();
+  });
+
+  describe("before loading", () => {
+    it("should set the showId, but not the show and the episodes", () => {
+      expect(component.showId).toEqual(6);
+      expect(component.show).toBeUndefined();
+      expect(component.episodes).toBeUndefined();
+    });
+
+    it("should not show the show", () => {
+      const element = fixture.nativeElement;
+      expect(element.querySelector(".details-title")).toBeNull();
+      expect(element.querySelector(".details-image")).toBeNull();
+    });
+
+    it("should show the loading message", () => {
+      const element = fixture.nativeElement;
+      expect(element.querySelector(".message").textContent).toContain("Loading shows...");
+    });
+
+    it("should not show the episode list", () => {
+      expect(fixture.debugElement.query(By.directive(EpisodeListMockComponent))).toBeNull();
+    });
+  });
+
+  describe("after loading", () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(ShowComponent);
-      component = fixture.componentInstance;
-      store = TestBed.get(Store);
       store.next(MOCK_STATE);
       fixture.detectChanges();
     });
 
-    it("should get the showId, the show and the episodes", () => {
+    it("should set the showId, the show and the episodes", () => {
       expect(component.showId).toEqual(5);
       expect(component.show).toEqual(MOCK_SHOW);
       expect(component.episodes).toEqual(MOCK_EPISODES);
@@ -62,36 +90,6 @@ describe("ShowComponent", () => {
       ).componentInstance;
       expect(episodeList.showId).toEqual(5);
       expect(episodeList.episodes).toEqual(MOCK_EPISODES);
-    });
-  });
-
-  describe("without show", () => {
-    beforeEach(() => {
-      fixture = TestBed.createComponent(ShowComponent);
-      component = fixture.componentInstance;
-      TestBed.get(Store).next(MOCK_EMPTY_STATE);
-      fixture.detectChanges();
-    });
-
-    it("should get the showId, but not the show and the episodes", () => {
-      expect(component.showId).toEqual(6);
-      expect(component.show).toBeUndefined();
-      expect(component.episodes).toBeUndefined();
-    });
-
-    it("should not show the show", () => {
-      const element = fixture.nativeElement;
-      expect(element.querySelector(".details-title")).toBeNull();
-      expect(element.querySelector(".details-image")).toBeNull();
-    });
-
-    it("should show the loading message", () => {
-      const element = fixture.nativeElement;
-      expect(element.querySelector(".message").textContent).toContain("Loading shows...");
-    });
-
-    it("should not show the episode list", () => {
-      expect(fixture.debugElement.query(By.directive(EpisodeListMockComponent))).toBeNull();
     });
   });
 });
