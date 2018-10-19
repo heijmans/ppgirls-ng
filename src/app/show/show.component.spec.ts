@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { Store } from "@ngrx/store";
-import { ShowComponent } from "./show.component";
+import { EpisodeListComponent } from "../episode-list/episode-list.component";
+import { MockStore, createMockComponent, createMockPipe } from "../lib/helpers.test";
 import { ShowTitlePipe } from "../pipes/show-title.pipe";
 import { SafeHtmlPipe } from "../pipes/safe-html.pipe";
+import { fetchShows, fetchEpisodes } from "../state/actions";
 import { IState } from "../state/state";
 import { MOCK_STATE, MOCK_EMPTY_STATE, MOCK_EPISODES, MOCK_SHOW } from "../state/state.mock";
-import { fetchShows, fetchEpisodes } from "../state/actions";
-import { MockStore, createMockComponent, createMockPipe } from "../lib/helpers.test";
-import { EpisodeListComponent } from "../episode-list/episode-list.component";
+import { ShowComponent } from "./show.component";
 
 describe("ShowComponent", () => {
   let store: MockStore<IState>;
@@ -36,6 +36,10 @@ describe("ShowComponent", () => {
   });
 
   describe("before loading", () => {
+    it("request the show", () => {
+      expect(store.dispatch).toHaveBeenCalledWith(fetchShows());
+    });
+
     it("should set the showId, but not the show and the episodes", () => {
       expect(component.showId).toEqual(6);
       expect(component.show).toBeUndefined();
@@ -64,15 +68,14 @@ describe("ShowComponent", () => {
       fixture.detectChanges();
     });
 
+    it("request the episodes", () => {
+      expect(store.dispatch).toHaveBeenCalledWith(fetchEpisodes(5));
+    });
+
     it("should set the showId, the show and the episodes", () => {
       expect(component.showId).toEqual(5);
       expect(component.show).toEqual(MOCK_SHOW);
       expect(component.episodes).toEqual(MOCK_EPISODES);
-    });
-
-    it("request the show and the episodes", () => {
-      expect(store.dispatch).toHaveBeenCalledWith(fetchShows());
-      expect(store.dispatch).toHaveBeenCalledWith(fetchEpisodes(5));
     });
 
     it("should show the show", () => {
