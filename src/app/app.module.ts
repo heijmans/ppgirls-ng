@@ -15,18 +15,7 @@ import { EpisodeComponent } from "./episode/episode.component";
 import { routes } from "./routes";
 import { reducers } from "./state/reducers";
 import { ShowEffects } from "./state/show.effects";
-import { INITIAL_STATE, SimpleRouterState } from "./state/state";
-
-export class CustomSerializer implements RouterStateSerializer<SimpleRouterState> {
-  serialize(routerState: RouterStateSnapshot): SimpleRouterState {
-    const { url, root } = routerState;
-    let route = root;
-    while (route.firstChild) {
-      route = route.firstChild;
-    }
-    return { url, params: route.params, queryParams: root.queryParams };
-  }
-}
+import { CustomRouteSerializer, INITIAL_STATE, SimpleRouterState } from "./state/state";
 
 @NgModule({
   declarations: [
@@ -46,7 +35,7 @@ export class CustomSerializer implements RouterStateSerializer<SimpleRouterState
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([ShowEffects]),
   ],
-  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
+  providers: [{ provide: RouterStateSerializer, useClass: CustomRouteSerializer }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

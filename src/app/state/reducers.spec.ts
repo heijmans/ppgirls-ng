@@ -1,23 +1,9 @@
-import { shows, episodesByShowId, reducers } from "./reducers";
+import { shows, episodesByShowId } from "./reducers";
 import { requestShows, receiveShows, requestEpisodes, receiveEpisodes } from "./actions";
 import { MOCK_SHOW, MOCK_EPISODES } from "./state.mock";
 
 describe("reducers", () => {
-  describe("map", () => {
-    it("should have reducers for all parts", () => {
-      expect(reducers).toEqual({
-        shows: jasmine.any(Function),
-        episodesByShowId: jasmine.any(Function),
-        router: jasmine.any(Function),
-      });
-    });
-  });
-
   describe("shows reducer", () => {
-    it("should set the initial state", () => {
-      expect(shows(undefined, requestShows())).toEqual({ isFetching: true });
-    });
-
     it("should handle a request action", () => {
       expect(shows({}, requestShows())).toEqual({ isFetching: true });
       expect(shows({ data: [] }, requestShows())).toEqual({ isFetching: true });
@@ -34,12 +20,6 @@ describe("reducers", () => {
   });
 
   describe("episodesByShowId reducer", () => {
-    it("should set the initial state", () => {
-      expect(episodesByShowId(undefined, requestEpisodes(11))).toEqual({
-        11: { isFetching: true },
-      });
-    });
-
     it("should handle a request action", () => {
       expect(episodesByShowId({}, requestEpisodes(7))).toEqual({ 7: { isFetching: true } });
       expect(episodesByShowId({ 8: { data: [] } }, requestEpisodes(8))).toEqual({

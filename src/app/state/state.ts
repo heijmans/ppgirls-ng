@@ -1,4 +1,5 @@
-import { RouterReducerState } from "@ngrx/router-store";
+import { RouterReducerState, RouterStateSerializer } from "@ngrx/router-store";
+import { RouterStateSnapshot } from "@angular/router";
 
 export interface IImage {
   medium: string;
@@ -66,4 +67,15 @@ export function makeSimpleRouteState({
     queryParams: queryParams || {},
   };
   return { state, navigationId: 0 };
+}
+
+export class CustomRouteSerializer implements RouterStateSerializer<SimpleRouterState> {
+  serialize(routerState: RouterStateSnapshot): SimpleRouterState {
+    const { url, root } = routerState;
+    let route = root;
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    return { url, params: route.params, queryParams: root.queryParams };
+  }
 }
