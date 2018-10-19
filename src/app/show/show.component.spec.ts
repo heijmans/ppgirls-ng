@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
+import { RouterTestingModule } from "@angular/router/testing";
 import { Store } from "@ngrx/store";
 import { EpisodeListComponent } from "../episode-list/episode-list.component";
 import { MockStore, createMockComponent, createMockPipe } from "../lib/helpers.test";
@@ -24,6 +25,7 @@ describe("ShowComponent", () => {
         createMockPipe(SafeHtmlPipe),
       ],
       providers: [{ provide: Store, useValue: new MockStore() }],
+      imports: [RouterTestingModule],
     }).compileComponents();
   }));
 
@@ -82,6 +84,11 @@ describe("ShowComponent", () => {
       const element = fixture.nativeElement;
       expect(element.querySelector(".details-title").textContent).toContain("PP2 (2013)");
       expect(element.querySelector(".details-image").src).toContain("original.jpg");
+    });
+
+    it("should show a back link", () => {
+      const element = fixture.nativeElement;
+      expect(element.querySelector("p > a").href).toContain("/");
     });
 
     it("should set the right properties on the episode list", () => {

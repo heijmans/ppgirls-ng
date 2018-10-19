@@ -7,7 +7,6 @@ import { fetchShows } from "../state/actions";
 import { IState } from "../state/state";
 import { MOCK_STATE, MOCK_EMPTY_STATE, MOCK_SHOW } from "../state/state.mock";
 import { ShowListComponent } from "./show-list.component";
-import {By} from "@angular/platform-browser";
 
 describe("ShowListComponent", () => {
   let store: MockStore<IState>;
@@ -16,10 +15,7 @@ describe("ShowListComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        ShowListComponent,
-        ShowTitlePipe,
-      ],
+      declarations: [ShowListComponent, ShowTitlePipe],
       providers: [{ provide: Store, useValue: new MockStore() }],
       imports: [RouterTestingModule],
     }).compileComponents();
