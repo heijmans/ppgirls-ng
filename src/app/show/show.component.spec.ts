@@ -8,7 +8,7 @@ import { SafeHtmlPipe } from "../pipes/safe-html.pipe";
 import { IEpisode, IState } from "../state/state";
 import { MOCK_STATE, MOCK_EMPTY_STATE, MOCK_EPISODES, MOCK_SHOW } from "../state/state.spec";
 import { fetchShows, fetchEpisodes } from "../state/actions";
-import { MockStore } from "../lib/test-helpers";
+import { MockStore } from "../lib/helpers.spec";
 
 @Component({ selector: "app-episode-list", template: "" })
 class EpisodeListMockComponent {
