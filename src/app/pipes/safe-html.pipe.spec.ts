@@ -1,13 +1,12 @@
 import { SafeHtmlPipe } from "./safe-html.pipe";
 import { DomSanitizer } from "@angular/platform-browser";
 import { async, TestBed } from "@angular/core/testing";
-import SpyObj = jasmine.SpyObj;
 
 describe("SafeHtmlPipe", () => {
-  let sanitizer: SpyObj<DomSanitizer>;
+  let sanitizer: jasmine.SpyObj<DomSanitizer>;
 
   beforeEach(async(() => {
-    sanitizer = jasmine.createSpyObj<DomSanitizer>("DomSanitizer", ["bypassSecurityTrustHtml"]);
+    sanitizer = jasmine.createSpyObj("DomSanitizer", ["bypassSecurityTrustHtml"]);
   }));
 
   it("should call bypassSecurityTrustHtml", () => {
