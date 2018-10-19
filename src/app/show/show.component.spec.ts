@@ -1,14 +1,14 @@
 import { Component, Input } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { Store, StoreModule } from "@ngrx/store";
+import { Store } from "@ngrx/store";
 import { ShowComponent } from "./show.component";
 import { ShowTitlePipe } from "../pipes/show-title.pipe";
 import { SafeHtmlPipe } from "../pipes/safe-html.pipe";
 import { IEpisode, IState } from "../state/state";
 import { MOCK_STATE, MOCK_EMPTY_STATE, MOCK_EPISODES, MOCK_SHOW } from "../state/state.spec";
-import { reducers } from "../state/reducers";
 import { fetchShows, fetchEpisodes } from "../state/actions";
+import { MockStore } from "../lib/test-helpers";
 
 @Component({ selector: "app-episode-list", template: "" })
 class EpisodeListMockComponent {
@@ -19,23 +19,22 @@ class EpisodeListMockComponent {
 }
 
 describe("ShowComponent", () => {
-  let store: Store<IState>;
+  let store: MockStore<IState>;
   let fixture: ComponentFixture<ShowComponent>;
   let component: ShowComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ShowComponent, SafeHtmlPipe, ShowTitlePipe, EpisodeListMockComponent],
-      imports: [StoreModule.forRoot(reducers, { initialState: MOCK_STATE })],
+      providers: [{ provide: Store, useValue: new MockStore() }],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    store = TestBed.get(Store);
-    spyOn(store, "dispatch");
-
     fixture = TestBed.createComponent(ShowComponent);
     component = fixture.componentInstance;
+    store = TestBed.get(Store);
+    store.next(MOCK_STATE);
     fixture.detectChanges();
   });
 
@@ -72,13 +71,14 @@ describe("ShowComponent without show", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ShowComponent, SafeHtmlPipe, ShowTitlePipe, EpisodeListMockComponent],
-      imports: [StoreModule.forRoot(reducers, { initialState: MOCK_EMPTY_STATE })],
+      providers: [{ provide: Store, useValue: new MockStore() }],
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ShowComponent);
     component = fixture.componentInstance;
+    TestBed.get(Store).next(MOCK_EMPTY_STATE);
     fixture.detectChanges();
   });
 
