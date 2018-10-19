@@ -1,8 +1,10 @@
 import { Component, Pipe } from "@angular/core";
-import {createMockComponent, createMockPipe, IMockClass} from "./helpers.test";
+import { createMockComponent, createMockPipe, IMockClass } from "./helpers.test";
 
 const DUMMY_COMPONENT: IMockClass = () => {};
-DUMMY_COMPONENT.__annotations__ = [new Component({ selector: "app-comp", template: "<h1>Title</h1>" })];
+DUMMY_COMPONENT.__annotations__ = [
+  new Component({ selector: "app-comp", template: "<h1>Title</h1>" }),
+];
 DUMMY_COMPONENT.__parameters__ = [5];
 
 const DUMMY_PIPE: IMockClass = () => {};
