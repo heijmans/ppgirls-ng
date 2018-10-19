@@ -5,11 +5,11 @@
     <table class="episodes-table">
       <tbody>
         <tr *ngFor="let episode of season.episodes; trackBy: trackByEpisodeId" routerLink="/shows/{{showId}}/episodes/{{episode.id}}" class="episode-row">
-          <td>
+          <td class="episode-image">
             <img src="{{episode.image.medium}}" alt="{{season.name}}" />
           </td>
-          <td>{{episode.number}}</td>
-          <td>{{episode.name}}</td>
+          <td class="episode-number">{{episode.number}}</td>
+          <td class="episode-name">{{episode.name}}</td>
         </tr>
       </tbody>
     </table>

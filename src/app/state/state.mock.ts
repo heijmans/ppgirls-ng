@@ -17,7 +17,7 @@ export const MOCK_SHOW: IShow = { id: 5, name: "PP2", premiered: "2013-01-10", i
 export const MOCK_EPISODES: IEpisode[] = [
   { id: 101, name: "EP101", image: MOCK_IMAGE, season: 1, number: 1 },
   { id: 102, name: "EP102", image: MOCK_IMAGE, season: 1, number: 2 },
-  { id: 103, name: "EP103", image: MOCK_IMAGE, season: 1, number: 3 },
+  { id: 103, name: "EP103", image: MOCK_IMAGE, season: 2, number: 3 },
 ];
 
 export const MOCK_STATE: IState = {
