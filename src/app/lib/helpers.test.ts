@@ -1,5 +1,7 @@
 import { Component, Pipe } from "@angular/core";
 import { Subject } from "rxjs";
+import { Action, Store } from "@ngrx/store";
+import { Actions } from "@ngrx/effects";
 
 /*
   How to use this?
@@ -24,6 +26,14 @@ import { Subject } from "rxjs";
 
 export class MockStore<State> extends Subject<State> {
   dispatch = jasmine.createSpy();
+}
+
+export function toStore<S>(store: MockStore<S>): Store<S> {
+  return (store as any) as Store<S>;
+}
+
+export function toActions<A extends Action>(actions$: Subject<A>): Actions<A> {
+  return (actions$ as any) as Actions<A>;
 }
 
 // see node_modules/@angular/core/src/util/decorators.d.ts for the names of the annotations properties
