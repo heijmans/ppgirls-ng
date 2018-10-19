@@ -7,7 +7,7 @@ import {
   RECEIVE_EPISODES,
   AppAction,
 } from "./actions";
-import { IState, ILoadEntry, IShow, IEpisodesByShow, SimpleRouterState } from "./state";
+import { IState, ILoadEntry, IShow, IEpisodesByShow } from "./state";
 
 export function shows(state: ILoadEntry<IShow[]> = {}, action: AppAction): ILoadEntry<IShow[]> {
   switch (action.type) {
