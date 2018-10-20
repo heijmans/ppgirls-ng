@@ -49,7 +49,7 @@ describe("selectors", () => {
       episodeId: undefined,
     });
     expect(getParams(mockStateWithRoute({}))).toEqual({ showId: undefined, episodeId: undefined });
-    expect(getParams({ shows: {}, episodesByShowId: {}})).toEqual({});
+    expect(getParams({ shows: {}, episodesByShowId: {} })).toEqual({});
   });
 
   it("should get the selected show", () => {
