@@ -7,6 +7,12 @@ describe("ShowService", () => {
   let mockHttp: HttpTestingController;
   let showService: ShowService;
 
+  function expectHttp(method: string, url: string, data: any): void {
+    const req = mockHttp.expectOne(url);
+    expect(req.request.method).toBe(method);
+    req.flush(data);
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [ShowService],
@@ -24,29 +30,20 @@ describe("ShowService", () => {
     showService.getShows().subscribe((shows) => {
       expect(shows).toEqual([MOCK_SHOW]);
     });
-
-    const req = mockHttp.expectOne("https://api.tvmaze.com/search/shows?q=powerpuff");
-    expect(req.request.method).toBe("GET");
-    req.flush([{ show: MOCK_SHOW }]);
+    expectHttp("GET", "https://api.tvmaze.com/search/shows?q=powerpuff", [{ show: MOCK_SHOW }]);
   }));
 
   it("should get the episodes", async(() => {
     showService.getEpisodes(6).subscribe((episodes) => {
       expect(episodes).toEqual(MOCK_EPISODES);
     });
-
-    const req = mockHttp.expectOne("https://api.tvmaze.com/shows/6/episodes");
-    expect(req.request.method).toBe("GET");
-    req.flush(MOCK_EPISODES);
+    expectHttp("GET", "https://api.tvmaze.com/shows/6/episodes", MOCK_EPISODES);
   }));
 
   it("should fix the missing show icon", async(() => {
     showService.getShows().subscribe((shows) => {
       expect(shows).toEqual([{ id: 8, name: "PP1", premiered: "2015", image: MISSING_IMAGE }]);
     });
-
-    const req = mockHttp.expectOne("https://api.tvmaze.com/search/shows?q=powerpuff");
-    expect(req.request.method).toBe("GET");
-    req.flush([{ show: { id: 8, name: "PP1", premiered: "2015" } }]);
+    expectHttp("GET", "https://api.tvmaze.com/search/shows?q=powerpuff", [{ show: { id: 8, name: "PP1", premiered: "2015" } }]);
   }));
 });
