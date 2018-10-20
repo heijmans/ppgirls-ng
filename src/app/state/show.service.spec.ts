@@ -44,6 +44,8 @@ describe("ShowService", () => {
     showService.getShows().subscribe((shows) => {
       expect(shows).toEqual([{ id: 8, name: "PP1", premiered: "2015", image: MISSING_IMAGE }]);
     });
-    expectHttp("GET", "https://api.tvmaze.com/search/shows?q=powerpuff", [{ show: { id: 8, name: "PP1", premiered: "2015" } }]);
+    expectHttp("GET", "https://api.tvmaze.com/search/shows?q=powerpuff", [
+      { show: { id: 8, name: "PP1", premiered: "2015" } },
+    ]);
   }));
 });

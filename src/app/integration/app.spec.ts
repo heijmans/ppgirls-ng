@@ -75,11 +75,11 @@ describe("AppComponent", () => {
     mockHttp = TestBed.get(HttpTestingController);
   }));
 
-    afterEach(() => {
-      mockHttp.verify();
-    });
+  afterEach(() => {
+    mockHttp.verify();
+  });
 
-    it("load and navigate from show list", fakeAsync(() => {
+  it("load and navigate from show list", fakeAsync(() => {
     go("/");
 
     const element = app.nativeElement;
