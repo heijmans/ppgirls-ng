@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store, select } from "@ngrx/store";
+import { makeSubscriptionList } from "../lib/subscription-list";
 import { IShow, IState } from "../state/state";
 import { getShows } from "../state/selectors";
 import { fetchShows } from "../state/actions";
@@ -9,14 +10,22 @@ import { fetchShows } from "../state/actions";
   templateUrl: "./show-list.component.html",
   styleUrls: ["./show-list.component.scss"],
 })
-export class ShowListComponent {
+export class ShowListComponent implements OnInit, OnDestroy {
   shows?: IShow[];
 
-  constructor(private store: Store<IState>) {
+  subscriptions = makeSubscriptionList();
+
+  constructor(private store: Store<IState>) { }
+
+  ngOnInit() {
     this.store.dispatch(fetchShows());
-    this.store.pipe(select(getShows)).subscribe((shows) => {
+    this.subscriptions.add(this.store.pipe(select(getShows)).subscribe((shows) => {
       this.shows = shows;
-    });
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribeAll();
   }
 
   trackByShowId(_: number, show: IShow): number {
