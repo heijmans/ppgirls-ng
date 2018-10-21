@@ -16,7 +16,7 @@ describe("EpisodeComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EpisodeComponent, createMockPipe(SafeHtmlPipe)],
-      providers: [{ provide: Store, useValue: new MockStore() }],
+      providers: [{ provide: Store, useValue: new MockStore(MOCK_EMPTY_STATE) }],
       imports: [RouterTestingModule],
     }).compileComponents();
   }));
@@ -25,7 +25,6 @@ describe("EpisodeComponent", () => {
     fixture = TestBed.createComponent(EpisodeComponent);
     component = fixture.componentInstance;
     store = TestBed.get(Store);
-    store.next(MOCK_EMPTY_STATE);
     fixture.detectChanges();
   });
 

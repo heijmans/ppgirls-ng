@@ -23,7 +23,7 @@ describe("ShowEffects", () => {
 
   beforeEach(() => {
     actions$ = new Subject<AppAction>();
-    store = new MockStore();
+    store = new MockStore(MOCK_EMPTY_STATE);
     showService = jasmine.createSpyObj<ShowService>("showService", ["getShows", "getEpisodes"]);
     showEffect = new ShowEffects(toActions(actions$), toStore(store), showService);
   });
@@ -44,7 +44,6 @@ describe("ShowEffects", () => {
         expect(actions).toEqual([]);
       },
     );
-    store.next(MOCK_EMPTY_STATE);
     actions$.next({ type: FETCH_SHOWS });
     actions$.complete();
   });
@@ -65,7 +64,6 @@ describe("ShowEffects", () => {
         expect(actions).toEqual([]);
       },
     );
-    store.next(MOCK_EMPTY_STATE);
     actions$.next({ type: FETCH_EPISODES, showId: 12 });
     actions$.complete();
   }));

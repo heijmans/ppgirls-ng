@@ -24,7 +24,7 @@ describe("ShowComponent", () => {
         createMockComponent(EpisodeListComponent),
         createMockPipe(SafeHtmlPipe),
       ],
-      providers: [{ provide: Store, useValue: new MockStore() }],
+      providers: [{ provide: Store, useValue: new MockStore(MOCK_EMPTY_STATE) }],
       imports: [RouterTestingModule],
     }).compileComponents();
   }));
@@ -33,7 +33,6 @@ describe("ShowComponent", () => {
     fixture = TestBed.createComponent(ShowComponent);
     component = fixture.componentInstance;
     store = TestBed.get(Store);
-    store.next(MOCK_EMPTY_STATE);
     fixture.detectChanges();
   });
 

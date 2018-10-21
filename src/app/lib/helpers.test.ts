@@ -1,5 +1,5 @@
 import { Component, Pipe } from "@angular/core";
-import { Subject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { Action, Store } from "@ngrx/store";
 import { Actions } from "@ngrx/effects";
 
@@ -24,7 +24,7 @@ import { Actions } from "@ngrx/effects";
   NOTE: make sure you call fixture.detectChanges after each call of store.next.
 */
 
-export class MockStore<State> extends Subject<State> {
+export class MockStore<State> extends BehaviorSubject<State> {
   dispatch = jasmine.createSpy();
 }
 
