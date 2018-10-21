@@ -10,9 +10,9 @@ import { getParams, getSelectedShow, getSelectedEpisodes } from "../state/select
   styleUrls: ["./show.component.scss"],
 })
 export class ShowComponent {
-  showId: number | undefined;
-  show: IShow | undefined;
-  episodes: IEpisode[] | undefined;
+  showId?: number;
+  show?: IShow;
+  episodes?: IEpisode[];
 
   constructor(private store: Store<IState>) {
     this.store.dispatch(fetchShows());

@@ -10,7 +10,7 @@ import { fetchShows } from "../state/actions";
   styleUrls: ["./show-list.component.scss"],
 })
 export class ShowListComponent {
-  shows: IShow[] | undefined;
+  shows?: IShow[];
 
   constructor(private store: Store<IState>) {
     this.store.dispatch(fetchShows());

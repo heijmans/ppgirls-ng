@@ -29,7 +29,7 @@ export function groupBySeason(episodes: IEpisode[]): ISeason[] {
 })
 export class EpisodeListComponent {
   @Input()
-  showId: number | undefined;
+  showId?: number;
 
   @Input()
   set episodes(episodes: IEpisode[] | undefined) {
@@ -38,7 +38,7 @@ export class EpisodeListComponent {
     }
   }
 
-  seasons: ISeason[] | undefined;
+  seasons?: ISeason[];
 
   constructor() {}
 
