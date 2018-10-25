@@ -1,27 +1,58 @@
-# PpgirlsNg
+# Powerpuff Girls
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.5.
+This is a SPA that shows episode lists for the different Powerpuff Girls cartoons.
 
-## Development server
+## Getting started
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Requirements:
 
-## Code scaffolding
+- [node 8+](https://nodejs.org/)
+- [yarn 1.x](https://yarnpkg.com/)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Install dependencies:
 
-## Build
+    yarn
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run the development server:
 
-## Running unit tests
+    yarn start
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Open in your browser: [http://localhost:4200](http://localhost:4200)
 
-## Running end-to-end tests
+Make a production build:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+    yarn build --prod
 
-## Further help
+Run the unit tests:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+    yarn test
+
+You can also use the `wallaby.js` config file to run the tests in Wallaby.
+
+Run the protractor e2e tests (do NOT start the development server):
+
+    yarn e2e
+
+Run the cypress e2e tests in your terminal (start the development server first with `yarn start`):
+
+    yarn cypress
+
+Run the cypress e2e tests in a browser (start the development server first with `yarn start`):
+
+    yarn cypress:open
+
+Run prettier and tslint on the source code:
+
+    yarn ok
+
+## Problems?
+
+I am not sure that cypress works flawlessly on all platforms. I have mainly tested this on MacOS. If you cannot continue because you cannot install cypress, just remove cypress from the devDependencies in package.json. e2e tests will not work, but all the rest should be fine.
+
+## Todo
+
+This is a very limited demo app. Important todo's are:
+
+- Beter cross browser testing (I only tested Firefox and Chrome).
+- Error handling.
+- Better in-code documentation (comments).
