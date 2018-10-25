@@ -55,4 +55,4 @@ This is a very limited demo app. Important todo's are:
 
 - Beter cross browser testing (I only tested Firefox and Chrome).
 - Error handling.
-- Better in-code documentation (comments).
+- Better/more documentation and comments.
