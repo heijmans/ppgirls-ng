@@ -46,11 +46,11 @@ export class ShowEffects {
     );
   }
 
-  getShows() {
+  getShows(): Observable<AppAction> {
     return this.showService.getShows().pipe(map((data) => receiveShows(data)));
   }
 
-  getEpisodes(showId: number) {
+  getEpisodes(showId: number): Observable<AppAction> {
     return this.showService.getEpisodes(showId).pipe(map((data) => receiveEpisodes(showId, data)));
   }
 }

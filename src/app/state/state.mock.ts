@@ -38,6 +38,6 @@ export const MOCK_EMPTY_STATE: IState = {
   router: makeSimpleRouteState({ params: { showId: "6", episodeId: "343" } }),
 };
 
-export function mockStateWithRoute(options: ISimpleRouteOptions) {
+export function mockStateWithRoute(options: ISimpleRouteOptions): IState {
   return Object.assign({}, MOCK_STATE, { router: makeSimpleRouteState(options) });
 }

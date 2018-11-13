@@ -25,14 +25,14 @@ describe("AppComponent", () => {
   let location: Location;
   let mockHttp: HttpTestingController;
 
-  function go(url: string) {
+  function go(url: string): void {
     app.ngZone!.run(() => {
       router.navigateByUrl(url);
     });
     checkUrl(url);
   }
 
-  function checkUrl(url: string) {
+  function checkUrl(url: string): void {
     tick();
     expect(location.path()).toBe(url);
     app.detectChanges();

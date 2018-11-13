@@ -17,28 +17,34 @@ export class EpisodeComponent implements OnInit, OnDestroy {
 
   subscriptions = makeSubscriptionList();
 
-  constructor(private store: Store<IState>) { }
+  constructor(private store: Store<IState>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.store.dispatch(fetchShows());
 
-    this.subscriptions.add(this.store.pipe(select(getParams)).subscribe(({ showId }) => {
-      if (showId && showId !== this.showId) {
-        this.showId = showId;
-        this.store.dispatch(fetchEpisodes(showId!));
-      }
-    }));
+    this.subscriptions.add(
+      this.store.pipe(select(getParams)).subscribe(({ showId }) => {
+        if (showId && showId !== this.showId) {
+          this.showId = showId;
+          this.store.dispatch(fetchEpisodes(showId!));
+        }
+      }),
+    );
 
-    this.subscriptions.add(this.store.pipe(select(getSelectedShow)).subscribe((show) => {
-      this.show = show;
-    }));
+    this.subscriptions.add(
+      this.store.pipe(select(getSelectedShow)).subscribe((show) => {
+        this.show = show;
+      }),
+    );
 
-    this.subscriptions.add(this.store.pipe(select(getSelectedEpisode)).subscribe((episode) => {
-      this.episode = episode;
-    }));
+    this.subscriptions.add(
+      this.store.pipe(select(getSelectedEpisode)).subscribe((episode) => {
+        this.episode = episode;
+      }),
+    );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscriptions.unsubscribeAll();
   }
 }

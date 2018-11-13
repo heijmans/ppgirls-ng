@@ -15,16 +15,18 @@ export class ShowListComponent implements OnInit, OnDestroy {
 
   subscriptions = makeSubscriptionList();
 
-  constructor(private store: Store<IState>) { }
+  constructor(private store: Store<IState>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.store.dispatch(fetchShows());
-    this.subscriptions.add(this.store.pipe(select(getShows)).subscribe((shows) => {
-      this.shows = shows;
-    }));
+    this.subscriptions.add(
+      this.store.pipe(select(getShows)).subscribe((shows) => {
+        this.shows = shows;
+      }),
+    );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscriptions.unsubscribeAll();
   }
 

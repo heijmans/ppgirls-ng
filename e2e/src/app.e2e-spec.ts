@@ -1,14 +1,15 @@
-import { browser, by, element } from "protractor";
+import { browser, by, element, ElementArrayFinder } from "protractor";
+import { promise } from "selenium-webdriver";
 
-function getShows() {
+function getShows(): ElementArrayFinder {
   return element.all(by.css(".show"));
 }
 
-function getEpisodes() {
+function getEpisodes(): ElementArrayFinder {
   return element.all(by.css(".episode-row"));
 }
 
-function getTitleText() {
+function getTitleText(): promise.Promise<string> {
   return element(by.css(".details-title")).getText();
 }
 
